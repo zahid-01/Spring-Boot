@@ -1,25 +1,21 @@
-package com.sudo.IoC_demo;
+package com.sudo.componentScanning.REST;
 
+import Util.Coach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class DemoController {
-
+public class Controller {
     private final Coach coach;
 
     @Autowired
-    public DemoController(Coach coach) {
+    public Controller(Coach coach) {
         this.coach = coach;
     }
 
-    public DemoController(Coach coach, String message){
-        this.coach = coach;
-        System.out.println(coach.getClass() + " " + message);
-    }
     @GetMapping("/getWorkout")
-    public String getWorkout(){
+    public String getWorkout() {
         return coach.getDailyWorkout();
     }
 }
