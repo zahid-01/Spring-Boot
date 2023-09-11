@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class Controller {
     private final Coach coach;
 
-    public Controller(Coach coach) {
+    public Controller(@Qualifier("cricketCoach") Coach coach) {
+        System.out.println("In constructor " + getClass().getSimpleName());
         this.coach = coach;
     }
 
