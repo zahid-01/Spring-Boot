@@ -2,7 +2,6 @@ package com.sudo.dev.ComponentScanningDemo.MainContainer.Common;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 @Component
