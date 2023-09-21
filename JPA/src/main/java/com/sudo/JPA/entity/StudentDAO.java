@@ -9,5 +9,12 @@ public interface StudentDAO {
     List<Student> getAll();
 
     List<Student> getByLastName(String lastName);
-    List<Student> predicateOr(String lastName);
+    List<Student> predicateOr(String firstName0, String firstName1);
+    void updateLastNames(String lastName);
+
+    void update(Student student);
+
+    void deleteByFirstName(String firstName);
+
+    void deleteAll();
 }
