@@ -22,7 +22,7 @@ public class employeeController {
 
     //CREATE
     @PostMapping("/employees")
-    public String createNewEmployee(@RequestBody Employee employee){
+    public Employee  createNewEmployee(@RequestBody Employee employee){
         return employeeService.createEmployee(employee);
     }
     //READ

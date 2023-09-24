@@ -1,34 +1,36 @@
 package com.sudo.dev.Employees.service;
 
 import com.sudo.dev.Employees.dao.EmployeeDAO;
+import com.sudo.dev.Employees.dao.EmployeeRepository;
 import com.sudo.dev.Employees.entity.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
-    private final EmployeeDAO employeeDAO;
+    private final EmployeeRepository employeeDAO;
 
     @Autowired
-    public EmployeeServiceImpl(EmployeeDAO employeeDAO) {
+    public EmployeeServiceImpl(EmployeeRepository employeeDAO) {
         this.employeeDAO = employeeDAO;
     }
 
     //CREATE
     @Override
     @Transactional
-    public String createEmployee(Employee employee) {
+    public Employee createEmployee(Employee employee) {
         String firstName = employee.getFirstName().trim();
         String lastName = employee.getLastName().trim();
         String email = employee.getEmail().trim();
 
-        if(email.length() < 3 || firstName.length() <3 || lastName.length() < 3)
+        if (email.length() < 3 || firstName.length() < 3 || lastName.length() < 3)
             throw new RuntimeException("Check your inputs");
-
-        return employeeDAO.createEmployee(firstName, lastName, email);
+        Employee employee1 = new Employee(firstName, lastName, email);
+        return employeeDAO.save(employee1);
     }
 
     //READ
@@ -38,20 +40,23 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee getEmployee(int id) {
-        Employee employee = employeeDAO.getEmployee(id);
+    public Employee getEmployee(Integer id) {
+        Optional<Employee> result = employeeDAO.findById(id);
 
-        if(employee == null)
+        Employee theEmployee = null;
+        if (result.isPresent())
+            theEmployee = result.get();
+        else
             throw new RuntimeException("No Employee with that id found");
 
-        return employee;
+        return theEmployee;
     }
 
     //UPDATE
     @Override
     @Transactional
     public Employee updateEmployee(Employee employee) {
-        return employeeDAO.updateEmployee(employee);
+        return employeeDAO.save(employee);
     }
 
     //DELETE
